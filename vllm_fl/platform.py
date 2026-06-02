@@ -406,9 +406,7 @@ class PlatformFL(Platform):
 
     @classmethod
     def use_custom_op_collectives(cls) -> bool:
-        if cls.vendor_name == "nvidia":
-            return True
-        return False
+        return cls.vendor_name in ("nvidia", "thead")
 
     @classmethod
     def num_compute_units(cls, device_id: int = 0) -> int:
@@ -434,7 +432,7 @@ class PlatformFL(Platform):
             return DeviceCapability(major=major, minor=minor)
         major, minor = torch.cuda.get_device_capability(device_id)
         return DeviceCapability(major=major, minor=minor)
-    
+
     @classmethod
     def support_deep_gemm(cls) -> bool:
         """Currently, only Hopper and Blackwell GPUs are supported."""
