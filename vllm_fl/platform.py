@@ -371,6 +371,8 @@ class PlatformFL(Platform):
     def pre_register_and_update(cls, parser=None) -> None:
         if cls.device_name == "npu":
             import vllm_fl.dispatch.backends.vendor.ascend
+        elif cls.device_name == "gcu":
+            import vllm_fl.dispatch.backends.vendor.gcu  # noqa: F401
 
     def supports_fp8(cls) -> bool:
         if cls.vendor_name == "nvidia":

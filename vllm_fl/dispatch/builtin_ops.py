@@ -93,6 +93,14 @@ def _register_vendor_backends(registry: OpRegistry) -> None:
         current_vendor_dir,
     )
 
+    if current_vendor_dir == "gcu":
+        try:
+            from .backends.vendor.gcu.patch import apply_gcu_patches
+
+            apply_gcu_patches()
+        except Exception as exc:
+            logger.warning("Failed to apply GCU patches: %s", exc)
+
     for vendor_name in available_vendor_dirs:
         vendor_path = os.path.join(_VENDOR_BACKENDS_DIR, vendor_name)
 

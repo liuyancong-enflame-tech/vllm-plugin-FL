@@ -90,3 +90,8 @@ def register_oot_ops(whitelist: Optional[List[str]] = None) -> None:
         if current_platform.device_type == "ptpu":
             from vllm_fl.dispatch.backends.vendor.sunrise.patch import apply_sunrise_patches
             apply_sunrise_patches()
+
+        # Apply GCU monkey-patches (Triton grid limits, etc.).
+        if getattr(current_platform, "vendor_name", None) == "gcu":
+            from vllm_fl.dispatch.backends.vendor.gcu.patch import apply_gcu_patches
+            apply_gcu_patches()
